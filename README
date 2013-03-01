@@ -1,0 +1,62 @@
+7750diff v0.7 Beta
+Written by Foeh Mannay, March 2013
+
+PURPOSE
+=======
+
+7750diff is a (semi-) hierarchy-aware tool for comparing 7750 configuration files / fragments. It dumps out differences between configs along with the "parent" context entries within which the changes were found.
+
+Please see http://networkingbodges.blogspot.com/ for more information on the theory behind this.
+
+INSTALLATION
+============
+
+For the Windows binary, just put it somewhere within your PATH or run it from the current directory.
+
+To compile from source, just run gcc against it. There are no dependancies above the standard C libraries.
+
+USAGE
+=====
+
+Simply run 7750diff and provide the names of the two configuration files you want to compare, for example:
+
+D:\7750diff>7750diff a.cfg b.cfg
+Unique to a.cfg:
+configure
+    qos
+        scheduler-policy "20000kbps" create
+            description "20000kbps Scheduler"
+            tier 1
+                scheduler "tier1" create
+                    rate 20000 cir 20000
+                exit
+            exit
+        exit
+    exit
+exit
+Unique to b.cfg:
+configure
+    qos
+        scheduler-policy "25000kbps" create
+            description "25000kbps Scheduler"
+            tier 1
+                scheduler "tier1" create
+                    rate 25000 cir 25000
+                exit
+            exit
+        exit
+        scheduler-policy "40000kbps" create
+            description "40000kbps Scheduler"
+            tier 1
+                scheduler "tier1" create
+                    rate 40000 cir 40000
+                exit
+            exit
+        exit
+    exit
+exit
+
+D:\7750diff>
+
+If you would only like to see the configuration elements unique to the first or second file, use "-first" or "-second" respectively.
+
